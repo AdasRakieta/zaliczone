@@ -1,0 +1,32 @@
+name: Zgłoszenie błędu
+description: Zgłoś błąd znaleziony podczas pracy z aplikacją
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: Oczekiwany rezultat
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Rzeczywisty rezultat
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Kroki odtworzenia
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Wpływ
+      options: ["Krytyczny", "Wysoki", "Średni", "Niski"]

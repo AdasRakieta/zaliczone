@@ -1,0 +1,42 @@
+name: User Story
+description: Funkcja opisana z perspektywy użytkownika
+title: "[US] "
+labels: ["user-story"]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: User Story
+      description: Jako [rola] chcę [funkcja], aby [korzyść].
+      placeholder: Jako student chcę dodać termin zaliczenia, aby zaplanować przygotowania.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Kryteria akceptacji
+      value: |
+        - [ ] 
+        - [ ] 
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorytet
+      options:
+        - P0 — konieczne dla MVP
+        - P1 — ważne
+        - P2 — można odłożyć
+    validations:
+      required: true
+  - type: input
+    id: estimate
+    attributes:
+      label: Estymata Planning Poker
+      placeholder: 1, 2, 3, 5 lub 8 SP
+  - type: textarea
+    id: owner
+    attributes:
+      label: Właściciel
+      description: Wpisz osobę odpowiedzialną i sprint.

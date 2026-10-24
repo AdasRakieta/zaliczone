@@ -1,0 +1,24 @@
+name: Zadanie techniczne lub dokumentacyjne
+description: Zmiana techniczna, test lub element dokumentacji
+title: "[TASK] "
+labels: ["task"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Cel zadania
+    validations:
+      required: true
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Warunki ukończenia
+      value: |
+        - [ ] 
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Właściciel i sprint
+      placeholder: Szymon Przybysz — Sprint 1
