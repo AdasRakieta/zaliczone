@@ -6,4 +6,7 @@ coverage/
 npm-debug.log*
 instrukcje/*
 tmp/
+__pycache__/
+*.pyc
+.report-venv/
 
