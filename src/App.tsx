@@ -1,9 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
-import { ArrowDownToLine, ArrowRight, BookOpen, CalendarDays, Check, CheckCheck, ChevronDown, CircleHelp, GraduationCap, Plus, RotateCcw, Sparkles, Trash2, Upload, X } from 'lucide-react'
+import { ArrowDownToLine, ArrowRight, BookOpen, CalendarDays, Check, CheckCheck, ChevronDown, CircleHelp, GraduationCap, Plus, RotateCcw, Sparkles, Trash2, Upload, X } from './components/Icons'
 import { emptyData, parsePlannerData, readData, storageKey, type Exam, type PlannerData, type StudyTask, type Subject } from './types'
 
 const colors = ['#6d8f68', '#c9855d', '#8183b7', '#d0a944', '#5d99a1', '#b86d80']
-const today = () => new Date().toISOString().slice(0, 10)
+const today = () => {
+  const value = new Date()
+  const local = new Date(value.getTime() - value.getTimezoneOffset() * 60_000)
+  return local.toISOString().slice(0, 10)
+}
 const uid = () => crypto.randomUUID()
 const formatDate = (date: string) => new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'long' }).format(new Date(date + 'T12:00:00'))
 const dayGap = (date: string) => Math.ceil((new Date(date + 'T00:00:00').getTime() - new Date(today() + 'T00:00:00').getTime()) / 86400000)
@@ -14,7 +18,11 @@ function seedData(): PlannerData {
     { id: 's2', name: 'Matematyka dyskretna', color: colors[2] },
     { id: 's3', name: 'Bazy danych', color: colors[4] },
   ]
-  const shift = (days: number) => { const d = new Date(); d.setDate(d.getDate() + days); return d.toISOString().slice(0, 10) }
+  const shift = (days: number) => {
+    const d = new Date()
+    d.setDate(d.getDate() + days)
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0')
+  }
   return {
     version: 1, subjects,
     exams: [
@@ -47,6 +55,14 @@ export default function App() {
   const unfinished = tasks.filter((task) => !task.done).length
   const doneCount = data.tasks.filter((task) => task.done).length
   const progress = data.tasks.length ? Math.round(doneCount / data.tasks.length * 100) : 0
+  function openEntry(kind: 'task' | 'exam') {
+    if (!data.subjects.length) {
+      setModal('subject')
+      notify('Najpierw dodaj przedmiot.')
+      return
+    }
+    setModal(kind)
+  }
 
   function addSubject(name: string) {
     if (!name.trim()) return
@@ -103,27 +119,27 @@ export default function App() {
         {data.subjects.map((subject) => <div className="subject-row" key={subject.id}><button className={'subject-filter ' + (filter === subject.id ? 'selected' : '')} onClick={() => setFilter(filter === subject.id ? 'all' : subject.id)}><i style={{ background: subject.color }} />{subject.name}</button><button className="delete-subject" title="Usuń przedmiot" aria-label={'Usuń przedmiot ' + subject.name} onClick={() => deleteSubject(subject.id)}><Trash2 size={13} /></button></div>)}
         {data.subjects.length === 0 && <p className="empty-sidebar">Dodaj pierwszy przedmiot, aby zacząć planować.</p>}
       </div>
-      <div className="sidebar-bottom"><div className="focus-card"><span className="focus-icon"><Sparkles size={16} /></span><strong>Małe kroki, duży spokój.</strong><p>Rozbij naukę na zadania i skup się na tym, co przed Tobą.</p><button onClick={() => setModal('task')}>Dodaj zadanie <ArrowRight size={14} /></button></div><button className="nav-item subtle" onClick={() => setModal('help')}><CircleHelp size={17} /> Jak to działa?</button></div>
+      <div className="sidebar-bottom"><div className="focus-card"><span className="focus-icon"><Sparkles size={16} /></span><strong>Małe kroki, duży spokój.</strong><p>Rozbij naukę na zadania i skup się na tym, co przed Tobą.</p><button onClick={() => openEntry('task')}>Dodaj zadanie <ArrowRight size={14} /></button></div><button className="nav-item subtle" onClick={() => setModal('help')}><CircleHelp size={17} /> Jak to działa?</button></div>
     </aside>
 
     <section className="main-content" id="start">
       <header className="topbar"><span className="breadcrumb">Mój semestr <span>/</span> <b>Plan nauki</b></span><div className="top-actions"><button className="text-button" onClick={() => setModal('help')}><CircleHelp size={16} /> Pomoc</button><span className="avatar" title="Twój osobisty plan">S</span></div></header>
       <div className="page-content">
-        <section className="welcome"><div><p className="eyebrow">{dateLabel}</p><h1>Spokojnie.<br/><span>Masz to rozplanowane.</span></h1><p className="welcome-copy">Wszystkie zaliczenia i kolejne kroki w jednym miejscu.</p></div><div className="welcome-art" aria-hidden="true"><span className="sun"/><span className="book book-back"/><span className="book book-front"><i/><i/><i/></span><span className="spark spark-one">✳</span><span className="spark spark-two">✦</span></div></section>
+        <section className="welcome"><div><p className="eyebrow">{dateLabel}</p><h1>Nie wszystko<br/><span>naraz.</span></h1><p className="welcome-copy">Zbierz terminy i małe kroki w jednym miejscu.<br/>Reszta może poczekać.</p></div><div className="welcome-art" aria-hidden="true"><svg viewBox="0 0 250 180" role="presentation"><path d="M34 37c27-11 53-8 78 9v104c-25-18-51-21-78-9z"/><path d="M112 46c25-17 52-20 80-9v104c-28-12-55-9-80 9z"/><path d="M112 47v104M48 60c15-4 30-2 43 4m-43 9c15-4 30-2 43 4m-43 9c15-4 30-2 43 4m49-22c14-6 30-7 46-3m-46 13c14-6 30-7 46-3m-46 13c14-6 30-7 46-3"/><path className="ink-mark" d="m175 28 5 8 10-13"/><path className="ink-mark" d="m41 25 5 4 7-8"/><path className="book-line" d="M25 150c26-12 55-8 87 10 31-18 62-22 91-10"/><path className="book-line" d="m197 55 15-3m-8 12 14 5"/></svg><span className="art-note">zaczynamy od jednego</span></div></section>
         <section className="summary-grid" aria-label="Podsumowanie planu">
           <article className="summary-card exam-summary"><div className="summary-top"><span className="summary-icon peach"><CalendarDays size={17}/></span><span className="card-kicker">NAJBLIŻSZE ZALICZENIE</span></div>{upcoming ? <><strong className="summary-number">{formatDate(upcoming.date)}</strong><span className="summary-foot"><i style={{background: subjects.get(upcoming.subjectId)?.color}}/>{subjects.get(upcoming.subjectId)?.name} · {upcoming.type}</span></> : <><strong className="summary-number">Brak terminów</strong><span className="summary-foot">Dodaj pierwsze zaliczenie</span></>}</article>
           <article className="summary-card task-summary"><div className="summary-top"><span className="summary-icon green"><CheckCheck size={17}/></span><span className="card-kicker">DO ZROBIENIA</span></div><strong className="summary-number">{unfinished} <small>{unfinished === 1 ? 'zadanie' : 'zadań'}</small></strong><span className="summary-foot">{data.tasks.length ? doneCount + ' z ' + data.tasks.length + ' kroków za Tobą' : 'Dodaj zadanie do nauki'}</span></article>
           <article className="summary-card progress-summary"><div className="summary-top"><span className="summary-icon lilac"><Sparkles size={17}/></span><span className="card-kicker">TWÓJ POSTĘP</span></div><strong className="summary-number">{progress}<small>%</small></strong><div className="progress-track"><span style={{width: progress + '%'}}/></div></article>
         </section>
-        <section className="section-heading"><div><p className="eyebrow">NAJBLIŻSZE KROKI</p><h2>Plan nauki</h2></div><div className="heading-actions"><label className="filter-select"><span className="sr-only">Filtruj plan po przedmiocie</span><select value={filter} onChange={(event) => setFilter(event.target.value)}><option value="all">Wszystkie przedmioty</option>{data.subjects.map((subject) => <option value={subject.id} key={subject.id}>{subject.name}</option>)}</select><ChevronDown size={15}/></label><button className="primary-button" onClick={() => setModal('task')}><Plus size={16}/> Dodaj zadanie</button></div></section>
+        <section className="section-heading"><div><p className="eyebrow">NAJBLIŻSZE KROKI</p><h2>Plan nauki</h2></div><div className="heading-actions"><label className="filter-select"><span className="sr-only">Filtruj plan po przedmiocie</span><select value={filter} onChange={(event) => setFilter(event.target.value)}><option value="all">Wszystkie przedmioty</option>{data.subjects.map((subject) => <option value={subject.id} key={subject.id}>{subject.name}</option>)}</select><ChevronDown size={15}/></label><button className="primary-button" onClick={() => openEntry('task')}><Plus size={16}/> Dodaj zadanie</button></div></section>
         <section className="planner-grid">
           <article className="panel task-panel"><div className="panel-heading"><div><h3>Zadania do nauki</h3><p>Jeden krok na raz, bez presji.</p></div><span className="panel-badge">{tasks.length}</span></div>
             {tasks.length ? <div className="task-list">{tasks.map((task) => <TaskRow key={task.id} task={task} subject={subjects.get(task.subjectId)} onToggle={() => toggleTask(task.id)} />)}</div> : <EmptyState icon={<CheckCheck size={19}/>} title="Tu pojawią się Twoje zadania" text={data.subjects.length ? 'Dodaj mały krok, od którego zaczniesz naukę.' : 'Najpierw dodaj przedmiot, a potem zaplanuj powtórkę.'} action="Dodaj zadanie" onClick={() => setModal(data.subjects.length ? 'task' : 'subject')} />}
-            <button className="panel-link" onClick={() => setModal('task')}>+ Dodaj kolejny krok</button>
+            <button className="panel-link" onClick={() => openEntry('task')}>+ Dodaj kolejny krok</button>
           </article>
-          <article className="panel dates-panel"><div className="panel-heading"><div><h3>Terminy zaliczeń</h3><p>Wiesz, ile masz jeszcze czasu.</p></div><button className="icon-button" aria-label="Dodaj termin" onClick={() => setModal('exam')}><Plus size={17}/></button></div>
+          <article className="panel dates-panel"><div className="panel-heading"><div><h3>Terminy zaliczeń</h3><p>Wiesz, ile masz jeszcze czasu.</p></div><button className="icon-button" aria-label="Dodaj termin" onClick={() => openEntry('exam')}><Plus size={17}/></button></div>
             {exams.length ? <div className="exam-list">{exams.map((exam) => <ExamRow key={exam.id} exam={exam} subject={subjects.get(exam.subjectId)} />)}</div> : <EmptyState icon={<CalendarDays size={19}/>} title="Kalendarz czeka na terminy" text="Dodaj datę zaliczenia, aby widzieć ją w swoim planie." action="Dodaj termin" onClick={() => setModal(data.subjects.length ? 'exam' : 'subject')} />}
-            <button className="panel-link" onClick={() => setModal('exam')}>+ Dodaj termin</button>
+            <button className="panel-link" onClick={() => openEntry('exam')}>+ Dodaj termin</button>
           </article>
         </section>
         <section className="subjects-section"><div className="section-heading compact"><div><p className="eyebrow">TWÓJ SEMESTR</p><h2>Przedmioty</h2></div><button className="text-button add-subject" onClick={() => setModal('subject')}><Plus size={16}/> Dodaj przedmiot</button></div>
