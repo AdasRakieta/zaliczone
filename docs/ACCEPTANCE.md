@@ -31,3 +31,9 @@ Issue [#18](https://github.com/AdasRakieta/zaliczone/issues/18) rejestruje probl
 Redesign został scalony w [PR #17](https://github.com/AdasRakieta/zaliczone/pull/17). CI [40088853147](https://github.com/AdasRakieta/zaliczone/actions/runs/40088853147) i Pages [40088853150](https://github.com/AdasRakieta/zaliczone/actions/runs/40088853150) przeszły. Poprawki #18 mają odrębny PR i przebieg CI. Aktualny wynik jest dostępny w [Actions](https://github.com/AdasRakieta/zaliczone/actions).
 
 Tablica GitHub odzwierciedla wykonane rezultaty techniczne. Udział członków zespołu, zaproszenia do repozytorium i rzeczywiste opinie są śledzone oddzielnie. Sprawozdanie PDF zawiera 10 rozdziałów; spotkania i sprinty są wyraźnie opisane jako symulacja.
+
+## Sprawozdanie według wzorca UKW i praca zespołu
+
+Nowy skład ma 20 stron, 10 rozdziałów i 11 numerowanych ilustracji. Zachowano oryginalne logo, style, numerowanie oraz dwie sekcje A4 z przekazanego DOCX; źródłowy plik i zachowane części pakietu porównano po SHA-256. DOCX i PDF zawierają tę samą treść, spisy, tabelę ról, backlog, Gantta, diagramy logiczne i fizyczne, wyniki testów, checklistę, SWOT, ryzyka, instrukcję i FAQ. Notatki oraz feedback wszystkich czterech osób są opracowaną symulacją zgodnie z zakresem ćwiczenia.
+
+GitHub Projects ma widok Zespół z kolumnami Szymon Przybysz, Iwona Figas, Jarek Antczak i Emil Kosicki. Pole odpowiedzialności przedstawia plan, a przypisanie kont pozostaje osobną czynnością. `main` wymaga PR, aktualnej gałęzi, zielonego verify i rozwiązanych uwag, z ochroną administratora oraz historią liniową. Lokalne hooki sprawdzono w czterech przypadkach: commit na branchu, blokada commitu na main, blokada pushu do main i dozwolony push brancha.

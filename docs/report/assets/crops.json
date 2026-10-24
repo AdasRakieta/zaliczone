@@ -1,0 +1,48 @@
+{
+  "app-main.png": {
+    "x": 0,
+    "y": 0,
+    "width": 830,
+    "height": 800
+  },
+  "app-task-dialog.png": {
+    "canvasHeight": 1271,
+    "canvasWidth": 3440,
+    "height": 441,
+    "width": 510,
+    "x": 1465,
+    "y": 415
+  },
+  "app-confirm-dialog.png": {
+    "canvasHeight": 1215,
+    "canvasWidth": 3440,
+    "height": 275,
+    "width": 510,
+    "x": 1465,
+    "y": 470
+  },
+  "app-mobile.png": {
+    "x": 0,
+    "y": 0,
+    "width": 375,
+    "height": 812
+  },
+  "actions.png": {
+    "x": 30,
+    "y": 180,
+    "width": 1500,
+    "height": 490
+  },
+  "bug.png": {
+    "width": 900,
+    "height": 470,
+    "y": 390,
+    "x": 1100
+  },
+  "team-board.png": {
+    "x": 20,
+    "y": 110,
+    "width": 1465,
+    "height": 650
+  }
+}

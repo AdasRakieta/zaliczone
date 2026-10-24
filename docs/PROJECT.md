@@ -109,14 +109,10 @@ flowchart LR
 
 **SWOT:** Mocne — mały zakres, brak serwera, działa offline po otwarciu; słabe — dane wiążą się z przeglądarką, brak współdzielenia; szanse — rozszerzenie o plan tygodnia, przypomnienia i integrację z kalendarzem; zagrożenia — wyczyszczenie pamięci lokalnej, utrata dostępu do hostingu, niepełny udział zespołu. Każde zagrożenie ma powiązane działanie w tabeli ryzyk.
 
-## Wstępny feedback 360°
+## Feedback 360 stopni i notatki spotkań
 
-Poniższe rubryki są **szablonem do uzupełnienia przez członków zespołu i interesariuszy**. Nie zawierają fikcyjnych ocen ani wypowiedzi. Po otrzymaniu rzeczywistego feedbacku zapisać datę, rolę autora za jego zgodą, obserwację, wpływ i działanie.
+Pełne notatki obu sprintów zawiera rozdział dziewiąty [sprawozdania](REPORT.md). Każde planowanie, Daily, przegląd i retrospektywa obejmują skrócone wypowiedzi Szymona, Iwony, Jarka i Emila, dopasowane do ich ról. Tabela feedbacku przedstawia obserwacje, wpływ i uzgodnione działania. Materiał jest kompletnym scenariuszem dydaktycznym, przygotowanym na potrzeby ćwiczenia.
 
-| Osoba / interesariusz | Co działa | Co poprawić | Działanie |
-|---|---|---|---|
-| Szymon Przybysz | Do uzupełnienia przez zespół | Do uzupełnienia | Do uzgodnienia |
-| Iwona Figas | Do uzupełnienia przez zespół | Do uzupełnienia | Do uzgodnienia |
-| Jarek Antczak | Do uzupełnienia przez zespół | Do uzupełnienia | Do uzgodnienia |
-| Emil Kosicki | Do uzupełnienia przez zespół | Do uzupełnienia | Do uzgodnienia |
-| Prowadzący / student testujący | Do uzupełnienia po zebraniu feedbacku | Do uzupełnienia | Do uzgodnienia |
+## Praca z repozytorium
+
+Każda zmiana wymaga brancha i PR do main. GitHub blokuje bezpośredni push, wymaga zielonego verify, aktualnej gałęzi i rozwiązanych uwag. Ochrona obejmuje administratora. Lokalne hooki blokują commit na main i push do zdalnego main. Komendy oraz sposób włączenia hooków opisuje [CONTRIBUTING.md](../CONTRIBUTING.md).

@@ -2,8 +2,9 @@
 
 Planer nauki i zaliczeń dla studentów. Dodawaj przedmioty, terminy i małe zadania do nauki, obserwuj postęp oraz przenoś swój plan za pomocą kopii JSON. Dane pozostają w pamięci przeglądarki; aplikacja nie wymaga konta ani serwera.
 
-**Aplikacja:** https://adasrakieta.github.io/zaliczone/  
-**Tablica pracy:** https://github.com/users/AdasRakieta/projects/5  
+**Aplikacja:** https://adasrakieta.github.io/zaliczone/<br>
+**Tablica pracy:** https://github.com/users/AdasRakieta/projects/5<br>
+**Widok zespołu:** https://github.com/users/AdasRakieta/projects/5/views/2<br>
 **Zespół:** Szymon Przybysz, Iwona Figas, Jarek Antczak, Emil Kosicki.
 
 ## Uruchomienie
@@ -20,7 +21,7 @@ npm test
 npm run build
 ~~~
 
-Eksport sprawozdania PDF (wymaga Google Chrome):
+Eksport sprawozdania DOCX i PDF (Python i LibreOffice; przygotowanie w [instrukcji składu](docs/report/README.md)):
 
 ~~~
 npm run report:pdf
@@ -35,9 +36,11 @@ npm run report:pdf
 
 ## Jak pracujemy
 
-Wybraliśmy Scrum z tablicą Kanban. Dwa symulowane sprinty, backlog, estymaty Planning Poker, zasady WIP, kryteria akceptacji, raporty i retrospektywy opisano w [planie projektu](docs/PROJECT.md). Dokumentację zaliczeniową w dziesięciu rozdziałach zawiera [sprawozdanie](docs/REPORT.md). Materiały sprintów są wyraźnie oznaczone jako **symulacja dydaktyczna** i nie przypisują członkom zespołu fikcyjnych wypowiedzi.
+Wybraliśmy Scrum z tablicą Kanban. Dwa symulowane sprinty, backlog, estymaty Planning Poker, zasady WIP i kryteria akceptacji opisano w [planie projektu](docs/PROJECT.md). Pełne [sprawozdanie](docs/REPORT.md) zachowuje dziesięć rozdziałów wzorca UKW. Zawiera ilustracje, diagramy i notatki ze skróconymi wypowiedziami wszystkich czterech osób oraz feedback 360°. Notatki spotkań i oceny są **symulacją dydaktyczną**.
 
-Gotowy plik do oddania: [sprawozdanie PDF](output/pdf/Sprawozdanie-Zaliczone.pdf).
+Jedno sprawozdanie w dwóch formatach: [edytowalny DOCX](output/docx/Sprawozdanie-Zaliczone.docx) oraz [PDF do oddania](output/pdf/Sprawozdanie-Zaliczone.pdf).
+
+Każda zmiana powstaje na branchu i przechodzi PR do chronionego `main`. [CONTRIBUTING.md](CONTRIBUTING.md) opisuje reguły GitHub, lokalne hooki i komendy pracy.
 
 ## CI i publikacja
 
