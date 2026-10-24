@@ -58,6 +58,11 @@ describe('bezpieczne zmiany planu i własne okna', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(trigger).toHaveFocus()
     expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual(plan)
+    const add = within(screen.getByRole('complementary')).getByRole('button', { name: 'Dodaj przedmiot', exact: true })
+    await user.click(add)
+    expect(screen.getByLabelText('Nazwa przedmiotu')).toHaveFocus()
+    await user.keyboard('{Escape}')
+    expect(add).toHaveFocus()
   })
 
   it('usuwa przedmiot i powiązane wpisy dopiero po potwierdzeniu', async () => {
