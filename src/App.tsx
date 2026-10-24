@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { ArrowDownToLine, ArrowRight, BookOpen, CalendarDays, Check, CheckCheck, ChevronDown, CircleHelp, GraduationCap, Plus, RotateCcw, Sparkles, Trash2, Upload, X } from './components/Icons'
 import { emptyData, parsePlannerData, readData, storageKey, type Exam, type PlannerData, type StudyTask, type Subject } from './types'
+import { ConfirmDialog, Modal, type Confirmation } from './components/Modal'
+import { calendarDaysBetween } from './dates'
 
 const colors = ['#6d8f68', '#c9855d', '#8183b7', '#d0a944', '#5d99a1', '#b86d80']
 const today = () => {
@@ -10,7 +12,7 @@ const today = () => {
 }
 const uid = () => crypto.randomUUID()
 const formatDate = (date: string) => new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'long' }).format(new Date(date + 'T12:00:00'))
-const dayGap = (date: string) => Math.ceil((new Date(date + 'T00:00:00').getTime() - new Date(today() + 'T00:00:00').getTime()) / 86400000)
+const dayGap = (date: string) => calendarDaysBetween(date, today())
 
 function seedData(): PlannerData {
   const subjects: Subject[] = [
@@ -45,13 +47,14 @@ export default function App() {
   const [modal, setModal] = useState<'subject' | 'exam' | 'task' | 'help' | null>(null)
   const [toast, setToast] = useState('')
   const [showDemo, setShowDemo] = useState(false)
+  const [confirmation, setConfirmation] = useState<Confirmation | null>(null)
   const importRef = useRef<HTMLInputElement>(null)
   const save = (next: PlannerData) => { setData(next); localStorage.setItem(storageKey, JSON.stringify(next)) }
   const notify = (message: string) => { setToast(message); window.setTimeout(() => setToast(''), 2800) }
   const subjects = useMemo(() => new Map(data.subjects.map((subject) => [subject.id, subject])), [data.subjects])
   const exams = useMemo(() => data.exams.filter((exam) => filter === 'all' || exam.subjectId === filter).sort((a, b) => a.date.localeCompare(b.date)), [data.exams, filter])
   const tasks = useMemo(() => data.tasks.filter((task) => filter === 'all' || task.subjectId === filter).sort((a, b) => a.dueDate.localeCompare(b.dueDate)), [data.tasks, filter])
-  const upcoming = exams[0]
+  const upcoming = exams.find((exam) => exam.date >= today())
   const unfinished = tasks.filter((task) => !task.done).length
   const doneCount = data.tasks.filter((task) => task.done).length
   const progress = data.tasks.length ? Math.round(doneCount / data.tasks.length * 100) : 0
@@ -70,10 +73,12 @@ export default function App() {
     setModal(null); notify('Przedmiot dodany do planu.')
   }
   function addExam(subjectId: string, title: string, date: string, type: Exam['type']) {
+    if (!title.trim()) return
     save({ ...data, exams: [...data.exams, { id: uid(), subjectId, title: title.trim(), date, type }] })
     setModal(null); notify('Termin zapisany.')
   }
   function addTask(subjectId: string, title: string, dueDate: string) {
+    if (!title.trim()) return
     save({ ...data, tasks: [...data.tasks, { id: uid(), subjectId, title: title.trim(), dueDate, done: false }] })
     setModal(null); notify('Zadanie dodane.')
   }
@@ -82,10 +87,12 @@ export default function App() {
   }
   function deleteSubject(subjectId: string) {
     const subject = subjects.get(subjectId)
-    if (!subject || !window.confirm('Usunąć „' + subject.name + '” razem z jego terminami i zadaniami?')) return
-    save({ ...data, subjects: data.subjects.filter((item) => item.id !== subjectId), exams: data.exams.filter((item) => item.subjectId !== subjectId), tasks: data.tasks.filter((item) => item.subjectId !== subjectId) })
-    if (filter === subjectId) setFilter('all')
-    notify('Przedmiot i powiązane wpisy usunięte.')
+    if (!subject) return
+    setConfirmation({ title: 'Usunąć przedmiot?', message: 'Przedmiot „' + subject.name + '” oraz jego terminy i zadania zostaną usunięte. Możesz wcześniej pobrać kopię planu.', action: 'Usuń przedmiot', onConfirm: () => {
+      save({ ...data, subjects: data.subjects.filter((item) => item.id !== subjectId), exams: data.exams.filter((item) => item.subjectId !== subjectId), tasks: data.tasks.filter((item) => item.subjectId !== subjectId) })
+      if (filter === subjectId) setFilter('all')
+      notify('Przedmiot i powiązane wpisy usunięte.')
+    } })
   }
   function exportData() {
     const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }))
@@ -96,16 +103,21 @@ export default function App() {
     if (!file) return
     try {
       const parsed = parsePlannerData(JSON.parse(await file.text()))
-      save(parsed); setFilter('all'); notify('Plan został odtworzony z kopii.')
+      const restore = () => { save(parsed); setFilter('all'); setShowDemo(false); notify('Plan został odtworzony z kopii.') }
+      if (data.subjects.length) setConfirmation({ title: 'Przywrócić kopię?', message: 'Kopia zastąpi bieżący plan na tym urządzeniu. Pobierz własną kopię, jeśli chcesz zachować obecne wpisy.', action: 'Przywróć kopię', onConfirm: restore })
+      else restore()
     } catch (error) { notify(error instanceof Error ? error.message : 'Nie udało się odczytać pliku.') }
     if (importRef.current) importRef.current.value = ''
   }
   function loadDemo() {
-    save(seedData()); setFilter('all'); setShowDemo(true); notify('Załadowano przykładowy plan.')
+    const load = () => { save(seedData()); setFilter('all'); setShowDemo(true); notify('Załadowano przykładowy plan.') }
+    if (data.subjects.length) setConfirmation({ title: 'Wczytać przykład?', message: 'Przykładowe dane zastąpią bieżący plan. Pobierz kopię przed wczytaniem przykładu, aby zachować własne wpisy.', action: 'Wczytaj przykład', onConfirm: load })
+    else load()
   }
   function resetPlan() {
-    if (!window.confirm('Usunąć wszystkie przedmioty, terminy i zadania z tego urządzenia?')) return
-    save(emptyData); setFilter('all'); setShowDemo(false); notify('Plan został wyczyszczony.')
+    setConfirmation({ title: 'Wyczyścić plan?', message: 'Wszystkie przedmioty, terminy i zadania zostaną usunięte z tego urządzenia. Przed usunięciem możesz pobrać kopię.', action: 'Wyczyść plan', onConfirm: () => {
+      save(emptyData); setFilter('all'); setShowDemo(false); notify('Plan został wyczyszczony.')
+    } })
   }
   const dateLabel = new Intl.DateTimeFormat('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())
 
@@ -147,7 +159,7 @@ export default function App() {
             const total = data.tasks.filter((task) => task.subjectId === subject.id).length
             const complete = data.tasks.filter((task) => task.subjectId === subject.id && task.done).length
             const examCount = data.exams.filter((exam) => exam.subjectId === subject.id).length
-            return <button className="subject-card" key={subject.id} onClick={() => setFilter(filter === subject.id ? 'all' : subject.id)}><span className="subject-color" style={{background: subject.color}}/><span className="subject-card-content"><strong>{subject.name}</strong><small>{examCount} {examCount === 1 ? 'termin' : 'terminów'} · {complete}/{total} zadań</small></span><ArrowRight size={16}/></button>
+            return <div className="subject-entry" key={subject.id}><button className="subject-card" onClick={() => setFilter(filter === subject.id ? 'all' : subject.id)}><span className="subject-color" style={{background: subject.color}}/><span className="subject-card-content"><strong>{subject.name}</strong><small>{examCount} {examCount === 1 ? 'termin' : 'terminów'} · {complete}/{total} zadań</small></span><ArrowRight size={16}/></button><button className="icon-button mobile-subject-delete" aria-label={'Usuń ' + subject.name} onClick={() => deleteSubject(subject.id)}><Trash2 size={15}/></button></div>
           })}</div> : <div className="subject-empty"><p>Twój semestr zaczyna się tutaj.</p><button onClick={() => setModal('subject')}><Plus size={15}/> Dodaj pierwszy przedmiot</button></div>}
         </section>
         <footer className="page-footer"><span>Zaliczone<span className="brand-dot">.</span> <span>Twój plan należy do Ciebie.</span></span><div><button onClick={exportData}><ArrowDownToLine size={14}/> Pobierz kopię</button><button onClick={() => importRef.current?.click()}><Upload size={14}/> Przywróć kopię</button><button onClick={loadDemo}><Sparkles size={14}/> Dane przykładowe</button><button onClick={resetPlan}><RotateCcw size={14}/> Wyczyść plan</button></div></footer>
@@ -157,6 +169,7 @@ export default function App() {
     {showDemo && <div className="demo-note"><Sparkles size={14}/> Przykładowy plan demonstracyjny <button aria-label="Ukryj informację o przykładzie" onClick={() => setShowDemo(false)}><X size={14}/></button></div>}
     {toast && <div className="toast" role="status">{toast}</div>}
     {modal && <Dialog kind={modal} subjects={data.subjects} onClose={() => setModal(null)} onSubject={addSubject} onExam={addExam} onTask={addTask}/>}
+    {confirmation && <ConfirmDialog confirmation={confirmation} onClose={() => setConfirmation(null)} />}
   </main>
 }
 
@@ -185,10 +198,10 @@ function Dialog({ kind, subjects, onClose, onSubject, onExam, onTask }: { kind: 
     else if (isExam) onExam(subjectId, title, date, type)
     else if (isTask) onTask(subjectId, title, date)
   }
-  return <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}><section className="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><header><h2 id="dialog-title">{heading}</h2><button className="icon-button" onClick={onClose} aria-label="Zamknij"><X size={18}/></button></header>
+  return <Modal title={heading} onClose={onClose}>
     {kind === 'help' ? <div className="help-copy"><p>Dodaj przedmioty, a pod nimi zaplanuj zaliczenia i małe kroki do nauki. Postęp aktualizuje się po oznaczeniu zadania jako wykonanego.</p><p>Plan zapisuje się w tej przeglądarce. Przyciski na dole strony pozwalają pobrać kopię JSON i przywrócić ją na tym lub innym urządzeniu.</p><p>Dane przykładowe służą do demonstracji — możesz je wyczyścić i zacząć własny plan.</p><button className="primary-button full" onClick={onClose}>Rozumiem</button></div> : <form onSubmit={submit}>
-      {isSubject ? <label>Nazwa przedmiotu<input autoFocus required maxLength={60} placeholder="np. Programowanie obiektowe" value={name} onChange={(event) => setName(event.target.value)}/></label> : <><label>{isExam ? 'Nazwa zaliczenia' : 'Co chcesz zrobić?'}<input autoFocus required maxLength={100} placeholder={isExam ? 'np. Kolokwium z algebry' : 'np. Powtórzyć rozdział 3'} value={title} onChange={(event) => setTitle(event.target.value)}/></label><label>Przedmiot<select required value={subjectId} onChange={(event) => setSubjectId(event.target.value)}>{subjects.map((subject) => <option key={subject.id} value={subject.id}>{subject.name}</option>)}</select></label><label>{isExam ? 'Data zaliczenia' : 'Termin zadania'}<input required type="date" value={date} onChange={(event) => setDate(event.target.value)}/></label>{isExam && <label>Rodzaj<select value={type} onChange={(event) => setType(event.target.value as Exam['type'])}><option>Kolokwium</option><option>Egzamin</option><option>Projekt</option></select></label>}</>}
+      {isSubject ? <label>Nazwa przedmiotu<input required maxLength={60} placeholder="np. Programowanie obiektowe" value={name} onChange={(event) => setName(event.target.value)}/></label> : <><label>{isExam ? 'Nazwa zaliczenia' : 'Co chcesz zrobić?'}<input required maxLength={100} placeholder={isExam ? 'np. Kolokwium z algebry' : 'np. Powtórzyć rozdział 3'} value={title} onChange={(event) => setTitle(event.target.value)}/></label><label>Przedmiot<select required value={subjectId} onChange={(event) => setSubjectId(event.target.value)}>{subjects.map((subject) => <option key={subject.id} value={subject.id}>{subject.name}</option>)}</select></label><label>{isExam ? 'Data zaliczenia' : 'Termin zadania'}<input required type="date" value={date} onChange={(event) => setDate(event.target.value)}/></label>{isExam && <label>Rodzaj<select value={type} onChange={(event) => setType(event.target.value as Exam['type'])}><option>Kolokwium</option><option>Egzamin</option><option>Projekt</option></select></label>}</>}
       <div className="dialog-actions"><button type="button" className="secondary-button" onClick={onClose}>Anuluj</button><button className="primary-button" type="submit"><Plus size={15}/> {isSubject ? 'Dodaj przedmiot' : isExam ? 'Zapisz termin' : 'Dodaj zadanie'}</button></div>
     </form>}
-  </section></div>
+  </Modal>
 }

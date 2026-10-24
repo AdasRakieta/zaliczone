@@ -84,7 +84,7 @@ Cel: dopracowany przepływ, dostępność, przykład, kopia danych, testy i publ
 
 ## Technologia i architektura
 
-React, TypeScript, Vite, lucide-react; Vitest i Testing Library. Statyczny frontend jest kompilowany do katalogu dist/ i serwowany przez GitHub Pages. Dane przepływają z formularzy do walidowanego modelu PlannerData, potem do stanu widoku i localStorage. Eksport serializuje JSON; import waliduje wersję, unikalność ID i relacje przed podmianą danych. Nie ma serwera, kont ani przesyłania danych użytkownika.
+React, TypeScript i Vite; Vitest i Testing Library. Wszystkie komponenty interfejsu, ikony SVG i ilustracja są własne. Fonty pochodzą z urządzenia, bez CDN. Wspólny komponent Modal obsługuje fokus, Escape oraz potwierdzenia zmiany danych. Statyczny frontend jest kompilowany do katalogu dist/ i serwowany przez GitHub Pages. Dane przepływają z formularzy do walidowanego modelu PlannerData, potem do stanu widoku i localStorage. Eksport serializuje JSON; import waliduje wersję, unikalność ID, daty i relacje przed podmianą danych. Nie ma serwera, kont ani przesyłania danych użytkownika.
 
 ~~~mermaid
 flowchart LR
@@ -102,7 +102,7 @@ flowchart LR
 |---|---:|---:|---|
 | Użytkownik wyczyści dane przeglądarki | Średnie | Wysoki | Widoczny eksport i instrukcja kopii zapasowej |
 | Niepoprawny JSON przy imporcie | Średnie | Średni | Walidacja całości przed zapisem i test błędnego pliku |
-| Utrata dostępności CDN z fontem | Niskie | Niski | Systemowy font zapasowy i brak zależności funkcji od CDN |
+| Przypadkowe zastąpienie planu przykładem lub kopią | Średnie | Wysoki | Własne okno potwierdzenia i możliwość anulowania przed zapisem |
 | Brak logowania innych osób do repo | Średnie | Średni | Zadania przypisane imiennie; zaproszenia po zebraniu loginów |
 | Błąd konfiguracji Pages lub ścieżek | Średnie | Wysoki | Build CI i kontrola wdrożonego adresu po publikacji |
 | Zakres rośnie ponad czas ćwiczeń | Średnie | Wysoki | Ochrona MVP; synchronizacja i konta po zaliczeniu |
