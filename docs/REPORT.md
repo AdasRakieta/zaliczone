@@ -12,7 +12,7 @@ Zaliczone jest planerem nauki i zaliczeń dla studentów. Łączy przedmioty, da
 
 ### Zakres projektu i metodyka pracy
 
-MVP obejmuje dodawanie i usuwanie przedmiotów, terminy, zadania, filtrowanie, postęp oraz kopię JSON. Dane są lokalne; produkt nie wymaga konta. Pracę planujemy w Scrumie z tablicą Kanban, w dwóch tygodniowych sprintach. Krótki cykl pozwala najpierw dostarczyć rdzeń planera, a następnie dopracować ochronę danych i wygodę obsługi.
+MVP obejmuje dodawanie i usuwanie przedmiotów, terminy, zadania, filtrowanie, postęp oraz kopię JSON. Dane są lokalne; produkt nie wymaga konta. Pracę planujemy w Scrumie z tablicą Kanban, w dwóch weekendowych sprintach: 17–18 i 24–25 października 2026. Krótki cykl pozwala najpierw dostarczyć rdzeń planera, a następnie dopracować ochronę danych i wygodę obsługi.
 
 ![Widok planera z przykładowymi przedmiotami, zadaniami i terminami](report/assets/app-main.png)
 Rys. 1. Widok planera z przykładowymi przedmiotami, zadaniami i terminami
@@ -84,8 +84,8 @@ Stosujemy skalę 1, 2, 3, 5 i 8 SP. Iwona wyjaśnia potrzebę oraz kryteria, ka�
 
 | Sprint | Cel | Zakres i pojemność |
 | --- | --- | --- |
-| 1<br>26.10–01.11.2026 | Plan ma strukturę i najbliższe kroki | US-01–06 oraz US-09; 27 SP. Przedmioty, zadania, terminy, filtr, postęp i lokalny zapis. |
-| 2<br>02.11–08.11.2026 | Gotowy planer z kopią i wygodną obsługą | US-07, US-08, US-10–12; 19 SP. Import i eksport, demo, telefon, pomoc, testy i publikacja. |
+| 1<br>17–18.10.2026 | Plan ma strukturę i najbliższe kroki | US-01–06 oraz US-09; 27 SP. Przedmioty, zadania, terminy, filtr, postęp i lokalny zapis. |
+| 2<br>24–25.10.2026 | Gotowy planer z kopią i wygodną obsługą | US-07, US-08, US-10–12; 19 SP. Import i eksport, demo, telefon, pomoc, testy i publikacja. |
 
 ### Definition of Ready i Definition of Done
 
@@ -303,9 +303,9 @@ Dlaczego procent postępu nie jest oceną z przedmiotu? Wskaźnik pokazuje udzia
 
 ## 9. Retrospektywa projektu
 
-Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną dwóch sprintów. Pokazują pracę czterech ról, zgłaszane trudności oraz konkretne ustalenia. Zapis jest skrócony do informacji potrzebnych do prowadzenia projektu.
+Poniższe notatki, wypowiedzi i feedback są symulacją dydaktyczną weekendów 17–18 i 24–25.10.2026. Pokazują pracę czterech ról i ustalenia. Na dzień 24.10 zapisy na 25.10 są planowanym scenariuszem, a nie relacją z odbytych spotkań.
 
-#### Sprint 1  Planowanie  26.10.2026  18.00
+#### Sprint 1  Planowanie  17.10.2026  09.00
 
 - **Iwona:** Najpierw student musi dodać przedmiot, termin i mały krok do nauki.
 - **Jarek:** Przyjmijmy cel działającego rdzenia i ograniczmy jednoczesną pracę do czterech zadań.
@@ -314,7 +314,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Przyjęto 27 SP. Iwona doprecyzowuje kryteria, Jarek koordynuje kolejność, Szymon model, Emil odbiór.
 
-#### Sprint 1  Daily Scrum  28.10.2026  20.00
+#### Sprint 1  Daily Scrum  18.10.2026  10.00
 
 - **Szymon:** Zapis działa; potrzebuję wspólnej nazwy subjectId w zadaniach i terminach.
 - **Iwona:** Formularze są czytelne, ale pusty plan powinien prowadzić najpierw do przedmiotu.
@@ -323,7 +323,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Ujednolicono subjectId. Nie rozpoczynamy kolejnej funkcji przed połączeniem filtra i zapisu.
 
-#### Sprint 1  Przegląd  01.11.2026  18.30
+#### Sprint 1  Przegląd  18.10.2026  18.30
 
 - **Iwona:** Da się zaplanować przykładowe zaliczenie; brakuje jeszcze wyjaśnienia lokalnego przechowywania.
 - **Jarek:** Cel sprintu osiągnięty; eksport i układ mobilny przechodzą do kolejnej iteracji.
@@ -332,7 +332,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Przyjęto rdzeń MVP. Do backlogu dopisano pomoc dotyczącą danych i ochronę odtwarzania.
 
-#### Sprint 1  Retrospektywa 4Ls  01.11.2026  19.00
+#### Sprint 1  Retrospektywa 4Ls  18.10.2026  19.00
 
 - **Szymon:** Pomogły małe zadania; następnym razem wcześniej uzgodnijmy format danych.
 - **Iwona:** Dobre były krótkie formularze; chcę mniej ogólnych, a więcej mierzalnych kryteriów.
@@ -343,7 +343,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 ### Notatki Sprintu 2 i działania usprawniające
 
-#### Sprint 2  Planowanie  02.11.2026  18.00
+#### Sprint 2  Planowanie  24.10.2026  09.00
 
 - **Iwona:** Kończymy kopię, telefon i pomoc; odłóżmy synchronizację oraz nowe rodzaje widoków.
 - **Jarek:** Mamy 19 SP; zostawmy końcówkę iteracji na wspólną demonstrację i poprawki.
@@ -352,7 +352,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Zakres zamknięto do pięciu User Stories. Każda osoba przegląda element z innego obszaru.
 
-#### Sprint 2  Daily Scrum  04.11.2026  20.00
+#### Sprint 2  Daily Scrum  25.10.2026  10.00  plan
 
 - **Emil:** Licznik zawyża dni przy zmianie czasu; dopisałem dokładne kroki odtworzenia.
 - **Szymon:** Poprawię obliczenia kalendarzowe i dodam regresję przed scaleniem kopii.
@@ -361,7 +361,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Błędy otrzymały właścicieli i kryteria. Odbiór poprawki dat wykonuje Emil, mobilnego widoku Iwona.
 
-#### Sprint 2  Przegląd  08.11.2026  18.30
+#### Sprint 2  Przegląd  25.10.2026  18.30  plan
 
 - **Szymon:** Kopia i publikacja działają; main jest chroniony, a zmiany przechodzą kontrolę CI.
 - **Iwona:** Interfejs jest spójny, a przykład pozwala poznać aplikację bez wpisywania semestru.
@@ -370,7 +370,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Przyjęto MVP. Zapisano wersję, kopię demonstracyjną, wyniki kontroli i pakiet sprawozdania.
 
-#### Sprint 2  Retrospektywa 4Ls  08.11.2026  19.00
+#### Sprint 2  Retrospektywa 4Ls  25.10.2026  19.00  plan
 
 - **Iwona:** Własne komponenty ułatwiły spójność; wcześniej pokażmy projekt widoku na telefonie.
 - **Jarek:** WIP pomógł dokończyć odbiór; utrzymajmy przegląd krótkich zadań w połowie sprintu.
@@ -379,7 +379,7 @@ Poniższe notatki, wypowiedzi i feedback są opracowaną symulacją dydaktyczną
 
 **Ustalenie:** Dalej stosujemy małe PR, wspólny odbiór mobilny i gotowe kryteria przed implementacją.
 
-Raport iteracji: zakres 19 SP zakończono w scenariuszu ćwiczenia. Najważniejszą zmianą procesu było domykanie błędów przed rozpoczęciem nowej pracy oraz sprawdzanie kopii i klawiatury jako części zwykłego odbioru.
+Planowane zamknięcie iteracji 25.10: 19 SP w scenariuszu ćwiczenia. Usprawnienia obejmują domykanie błędów przed nową pracą oraz sprawdzanie kopii i klawiatury w zwykłym odbiorze. Rzeczywisty wynik kontroli z 24.10 opisuje rozdział o testach.
 
 ### Feedback 360 stopni i podsumowanie retrospektyw
 

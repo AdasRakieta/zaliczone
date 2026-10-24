@@ -48,20 +48,22 @@ def generate():
     ], [((1.75,2),(2.15,2),''),((3.75,2),(4.15,2),''),((5.75,2),(6.15,2),''),((7.75,2),(8.15,2),'')], (10,2.6))
     fig, ax = plt.subplots(figsize=(10,3.25))
     labels=['Model i repozytorium','Przedmioty, zadania i terminy','Kopia JSON i pomoc','Interfejs i jakość','Dokumentacja i odbiór']
-    tasks=[(0,3),(0,7),(7,4),(7,7),(5,9)]
-    ax.axvspan(-0.4,6.5,color='#f1f1f1');ax.axvspan(6.5,13.6,color='#edf1f5')
+    tasks=[(0,1),(0,2),(2,1),(2,2),(1,1)]
+    ax.axvspan(-0.4,1.5,color='#f1f1f1');ax.axvspan(1.5,3.6,color='#edf1f5')
     for index,(start,length) in enumerate(tasks):ax.barh(index,length,left=start-0.3,height=.5,color=BLUE)
-    ax.scatter([6,13],[5,5],marker='D',color='#a17a31',s=40,zorder=5)
-    ax.text(6,4.7,'M1',ha='center');ax.text(13,4.7,'M2',ha='center')
+    ax.barh(4,1,left=2.7,height=.5,color=BLUE)
+    ax.scatter([1,3],[5,5],marker='D',color='#a17a31',s=40,zorder=5)
+    ax.text(1,4.7,'M1',ha='center');ax.text(3,4.7,'M2 (plan)',ha='center')
     ax.set_yticks(range(6),labels+['Przeglądy sprintów']);ax.invert_yaxis()
-    ax.set_xticks(range(14),['26 X','27','28','29','30','31','1 XI','2','3','4','5','6','7','8 XI'])
-    ax.set_xlim(-.4,13.6);ax.tick_params(axis='x',labelsize=9);ax.grid(axis='x',alpha=.22);ax.set_axisbelow(True)
+    ax.set_xticks(range(4),['17 X','18 X','24 X','25 X (plan)'])
+    ax.set_xlabel('Dni sprintów weekendowych 2026 (przerwa 19–23 X)')
+    ax.set_xlim(-.4,3.8);ax.tick_params(axis='x',labelsize=9);ax.grid(axis='x',alpha=.22);ax.set_axisbelow(True)
     fig.tight_layout();fig.savefig(ASSETS/'gantt.png',dpi=220,facecolor='white');plt.close(fig)
     fig, axes=plt.subplots(1,2,figsize=(10,3.25),sharex=True)
-    for ax,values,title in zip(axes,[[27,24,21,18,13,9,4,0],[19,19,16,12,8,5,2,0]],['Sprint 1  27 SP','Sprint 2  19 SP']):
+    for ax,values,title in zip(axes,[[27,24,21,18,13,9,4,0],[19,19,16,12,8,5,2,0]],['Sprint 1  17–18 X  27 SP','Sprint 2  24–25 X  19 SP (scenariusz)']):
         ax.plot(range(8),[values[0]*(1-x/7) for x in range(8)],'--',color='#999999',label='Linia planowana')
         ax.plot(range(8),values,'o-',color=BLUE,label='Przebieg symulowany')
-        ax.set(title=title,xlabel='Dzień sprintu',ylabel='Pozostałe SP',xticks=range(8),ylim=(0,30));ax.grid(alpha=.2)
+        ax.set(title=title,xlabel='Punkt kontrolny weekendu (0–7)',ylabel='Pozostałe SP',xticks=range(8),ylim=(0,30));ax.grid(alpha=.2)
     axes[1].legend(fontsize=9,frameon=False);fig.tight_layout();fig.savefig(ASSETS/'burndown.png',dpi=220,facecolor='white');plt.close(fig)
 
 if __name__ == '__main__': generate()
