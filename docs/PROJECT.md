@@ -25,7 +25,7 @@ Każdy pomaga w implementacji i przegląda Pull Requesty. Rozdział ról jest pr
 
 Aktualizacja Daily: co udało się zrobić, co jest następne i co blokuje. Planowanie ustala cel, zakres i szacunek. Przegląd pokazuje działający przyrost. Retrospektywa używa 4Ls (Liked, Learned, Lacked, Longed for) i kończy się konkretnym działaniem.
 
-Kolumny tablicy: **Backlog → Ready → In Progress → Review/Test → Done**. WIP: najwyżej 4 zadania w In Progress i 2 w Review/Test. Nowa praca trafia do Ready po dopisaniu kryteriów odbioru, priorytetu, właściciela, sprintu i szacunku.
+Widok Board w GitHub Projects używa wbudowanych statusów **Todo → In Progress → Done**. Dodatkowe pole „Etap pracy” precyzuje przepływ: **Backlog → Ready → In Progress → Review/Test → Done**. WIP: najwyżej 4 zadania w In Progress i 2 w Review/Test. Nowa praca trafia do Ready po dopisaniu kryteriów odbioru, priorytetu, właściciela, sprintu i szacunku.
 
 **Ready:** jasny opis, kryteria akceptacji, wartość/prioritet, rozmiar i brak nierozwiązanej zależności. **Done:** kryteria spełnione, testy adekwatne do zmiany, PR przejrzany, CI zielone i dokumentacja uaktualniona.
 

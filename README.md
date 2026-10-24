@@ -20,6 +20,12 @@ npm test
 npm run build
 ~~~
 
+Eksport sprawozdania PDF (wymaga Google Chrome):
+
+~~~
+npm run report:pdf
+~~~
+
 ## Funkcje
 
 - Przedmioty z własnymi kolorami, daty egzaminów, kolokwiów i projektów oraz zadania do nauki.
@@ -30,6 +36,8 @@ npm run build
 ## Jak pracujemy
 
 Wybraliśmy Scrum z tablicą Kanban. Dwa symulowane sprinty, backlog, estymaty Planning Poker, zasady WIP, kryteria akceptacji, raporty i retrospektywy opisano w [planie projektu](docs/PROJECT.md). Dokumentację zaliczeniową w dziesięciu rozdziałach zawiera [sprawozdanie](docs/REPORT.md). Materiały sprintów są wyraźnie oznaczone jako **symulacja dydaktyczna** i nie przypisują członkom zespołu fikcyjnych wypowiedzi.
+
+Gotowy plik do oddania: [sprawozdanie PDF](output/pdf/Sprawozdanie-Zaliczone.pdf).
 
 ## CI i publikacja
 
