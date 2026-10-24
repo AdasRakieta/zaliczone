@@ -8,7 +8,7 @@
 
 ## Metodyka i kompromisy
 
-Scrum z tablicą Kanban. Dwa tygodniowe sprinty symulacyjne dają widoczny przyrost na końcu każdej iteracji. Scrum zapewnia cel sprintu, przegląd i retrospektywę; tablica Kanban pokazuje przepływ oraz blokady. Zespół ma cztery osoby i mały, demonstracyjny zakres, więc nie dodajemy formalnych ról ponad potrzebę. Priorytetem jest działający produkt i wiarygodny materiał zaliczeniowy w ograniczonym czasie; logowanie i synchronizacja pozostają poza MVP.
+Scrum z tablicą Kanban. Dwa weekendowe sprinty symulacyjne dają widoczny przyrost na końcu każdej iteracji. Scrum zapewnia cel sprintu, przegląd i retrospektywę; tablica Kanban pokazuje przepływ oraz blokady. Zespół ma cztery osoby i mały, demonstracyjny zakres, więc nie dodajemy formalnych ról ponad potrzebę. Priorytetem jest działający produkt i wiarygodny materiał zaliczeniowy w ograniczonym czasie; logowanie i synchronizacja pozostają poza MVP.
 
 ## Zespół
 
@@ -52,7 +52,7 @@ Estymaty w punktach Planning Poker są **proponowanymi wartościami symulacji**,
 
 ## Sprinty i raporty
 
-Daty: 26.10–01.11.2026 oraz 02.11–08.11.2026. Poniższe notatki to **scenariusz symulacyjny** dla sprawozdania, nie dowód wykonanych spotkań.
+Daty: **17–18.10.2026** (Sprint 1, poprzedni weekend) oraz **24–25.10.2026** (Sprint 2, bieżący weekend). Poniższe notatki to **scenariusz symulacyjny** dla sprawozdania, nie dowód wykonanych spotkań. Na dzień 24.10 wydarzenia i zakończenie Sprintu 2 przypadające na 25.10 są planem.
 
 ### Sprint 1 — „Plan ma strukturę i najbliższe kroki”
 
@@ -72,7 +72,7 @@ Cel: dopracowany przepływ, dostępność, przykład, kopia danych, testy i publ
 
 ## Harmonogram Gantta
 
-| Praca / kamień milowy | 26–28 X | 29 X–1 XI | 2–4 XI | 5–8 XI |
+| Praca / kamień milowy | 17 X | 18 X | 24 X | 25 X (plan) |
 |---|:---:|:---:|:---:|:---:|
 | Model danych, repozytorium i CI | █ |  |  |  |
 | Przedmioty, zadania, terminy, filtr | █ | █ |  |  |
