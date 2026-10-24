@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { emptyData, parsePlannerData } from './types'
+import { emptyData, parsePlannerData, readData, storageKey } from './types'
 
 describe('format planu', () => {
   it('akceptuje pusty plan i poprawne powiązane wpisy', () => {
+    localStorage.setItem(storageKey, '{uszkodzony zapis')
+    expect(readData()).toEqual(emptyData)
+    localStorage.clear()
     expect(parsePlannerData(emptyData)).toEqual(emptyData)
     expect(parsePlannerData({
       version: 1,

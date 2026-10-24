@@ -8,7 +8,9 @@
 4. Zaznaczaj wykonane kroki. Wskaźnik postępu przelicza się automatycznie.
 5. Użyj filtra, aby skupić się na wybranym przedmiocie.
 
-Plan zapisuje się w bieżącej przeglądarce. Przyciski **Pobierz kopię** i **Przywróć kopię** przenoszą dane między urządzeniami. Wybierz **Dane przykładowe**, aby zobaczyć demonstracyjny plan; własne dane zastąpią jego zawartość. **Wyczyść plan** usuwa całą lokalną listę po potwierdzeniu. Usunięcie przedmiotu usuwa również jego terminy i zadania.
+Plan zapisuje się w bieżącej przeglądarce. Przyciski **Pobierz kopię** i **Przywróć kopię** przenoszą dane między urządzeniami. Wybierz **Dane przykładowe**, aby zobaczyć demonstracyjny plan. Import kopii i wczytanie przykładu zastępują bieżące wpisy po potwierdzeniu; pobierz najpierw własną kopię, jeśli chcesz je zachować. **Wyczyść plan** usuwa całą lokalną listę po potwierdzeniu. Usunięcie przedmiotu usuwa również jego terminy i zadania. Na telefonie przycisk kosza znajduje się obok karty przedmiotu.
+
+W oknach możesz przechodzić między kontrolkami klawiszami **Tab** i **Shift+Tab**. **Escape** zamyka okno bez zmiany danych. Po zamknięciu fokus wraca do przycisku, z którego otwarto okno, jeśli ten przycisk nadal istnieje.
 
 ## FAQ
 

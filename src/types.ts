@@ -6,6 +6,12 @@ export type PlannerData = { version: 1; subjects: Subject[]; exams: Exam[]; task
 export const emptyData: PlannerData = { version: 1, subjects: [], exams: [], tasks: [] }
 export const storageKey = 'zaliczone:data:v1'
 
+function validDate(value: unknown): value is string {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false
+  const date = new Date(value + 'T12:00:00Z')
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value
+}
+
 export function parsePlannerData(value: unknown): PlannerData {
   if (!value || typeof value !== 'object') throw new Error('Plik nie zawiera poprawnego planu.')
   const data = value as Partial<PlannerData>
@@ -20,11 +26,11 @@ export function parsePlannerData(value: unknown): PlannerData {
   const subjectIds = new Set(data.subjects.map((subject) => subject.id))
   const idsSeen = new Set<string>(ids)
   for (const record of data.exams) {
-    if (!record || typeof record.id !== 'string' || !record.id || idsSeen.has(record.id) || !subjectIds.has(record.subjectId) || typeof record.title !== 'string' || !record.title.trim() || typeof record.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(record.date)) throw new Error('Termin lub zadanie zawiera niepoprawne dane.')
+    if (!record || typeof record.id !== 'string' || !record.id || idsSeen.has(record.id) || !subjectIds.has(record.subjectId) || typeof record.title !== 'string' || !record.title.trim() || !validDate(record.date)) throw new Error('Termin lub zadanie zawiera niepoprawne dane.')
     idsSeen.add(record.id)
   }
   for (const record of data.tasks) {
-    if (!record || typeof record.id !== 'string' || !record.id || idsSeen.has(record.id) || !subjectIds.has(record.subjectId) || typeof record.title !== 'string' || !record.title.trim() || typeof record.dueDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(record.dueDate)) throw new Error('Termin lub zadanie zawiera niepoprawne dane.')
+    if (!record || typeof record.id !== 'string' || !record.id || idsSeen.has(record.id) || !subjectIds.has(record.subjectId) || typeof record.title !== 'string' || !record.title.trim() || !validDate(record.dueDate)) throw new Error('Termin lub zadanie zawiera niepoprawne dane.')
     idsSeen.add(record.id)
   }
   if (data.exams.some((exam) => !['Egzamin', 'Kolokwium', 'Projekt'].includes(exam.type))) throw new Error('Rodzaj zaliczenia jest niepoprawny.')

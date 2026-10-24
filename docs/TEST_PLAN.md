@@ -9,20 +9,25 @@ Testy aplikacji uruchamia npm test; pipeline wykonuje je przed kompilacją i wdr
 | T-03 | Dodać termin zaliczenia | Termin sortuje się po dacie | Automatyczny |
 | T-04 | Oznaczyć zadanie jako wykonane | Zmienia się status i wartość postępu | Automatyczny |
 | T-05 | Filtrować po przedmiocie | Widoczne są wyłącznie powiązane zadania i terminy | Automatyczny |
-| T-06 | Zaimportować poprawną kopię | Plan zostaje odtworzony | Ręczny odbiór |
-| T-07 | Zaimportować uszkodzony plik | Komunikat błędu; dotychczasowe dane pozostają | Walidacja jednostkowa |
-| T-08 | Otworzyć na szerokości 360 px i klawiaturą | Bez poziomego przepełnienia; formularze i przyciski osiągalne | Ręczny odbiór |
-| T-09 | Wyczyścić dane przeglądarki | Aplikacja pokazuje stan pusty i umożliwia nowy plan | Ręczny odbiór |
+| T-06 | Zaimportować poprawną kopię | Plan zostaje odtworzony po potwierdzeniu | Test interfejsu |
+| T-07 | Zaimportować uszkodzony plik lub niemożliwą datę | Komunikat błędu; dotychczasowe dane pozostają | Test interfejsu i walidatora |
+| T-08 | Otworzyć na szerokości 360 px i klawiaturą | Bez przepełnienia; postęp i usuwanie widoczne; fokus w oknie | Chrome 360 px oraz test Tab/Escape/powrotu fokusu |
+| T-09 | Anulować usuwanie, następnie je potwierdzić | Dopiero potwierdzenie usuwa wpisy; pojawia się pusty stan | Test interfejsu |
+| T-10 | Liczyć dni przez zmianę czasu | Dni kalendarzowe, niezależnie od zmiany czasu | Test regresji i odczyt w Chrome |
+| T-11 | Mieć przeszły i przyszły termin | Podsumowanie wybiera nadchodzący, lista pozostaje posortowana | Test interfejsu |
 
 ## Checklista jakości
 
-- [ ] npm ci, npm test oraz npm run build kończą się powodzeniem.
-- [ ] Dodanie i oznaczanie elementów aktualizuje podsumowanie.
-- [ ] Import błędnego pliku nie zmienia danych.
-- [ ] Potwierdzenie poprzedza usuwanie przedmiotu i czyszczenie całego planu.
-- [ ] Strona działa na telefonie i komputerze oraz z klawiatury.
-- [ ] Wdrożenie Pages ładuje pliki spod ścieżki repozytorium.
-- [ ] Instrukcja obsługi i komunikaty odpowiadają aktualnej aplikacji.
+- [x] npm ci w CI, npm test oraz npm run build kończą się powodzeniem.
+- [x] Dodanie i oznaczanie elementów aktualizuje podsumowanie.
+- [x] Import błędnego pliku nie zmienia danych.
+- [x] Własne potwierdzenie poprzedza usuwanie, import i wczytanie demo na istniejącym planie.
+- [x] Widok 360 px i desktop obejrzany w Chrome; fokus, Tab i Escape sprawdzone.
+- [x] Wdrożony redesign Pages ładuje pliki spod ścieżki repozytorium.
+- [x] Instrukcja obsługi i komunikaty odpowiadają aktualnej aplikacji.
+- [ ] Zespół sprawdza plan na swoich fizycznych urządzeniach i przekazuje rzeczywisty feedback.
+
+Wynik lokalny po poprawkach #18: **11/11 testów w czterech plikach**, build poprawny. Zakres i dowody: [ACCEPTANCE.md](ACCEPTANCE.md). Kontrole w Chrome i testy automatyczne nie są opinią członków zespołu ani testem na fizycznym telefonie.
 
 ## Bug tracking
 

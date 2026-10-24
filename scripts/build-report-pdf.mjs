@@ -25,7 +25,7 @@ const html = [
   'p{margin:0 0 8pt}blockquote{margin:0 0 17pt;padding:10pt 12pt;border-left:3pt solid #b7674b;background:#f3efe6;color:#5f5d52;font-size:9.5pt}',
   'table{width:100%;border-collapse:collapse;margin:9pt 0 14pt;font-size:8.7pt;line-height:1.35;break-inside:auto}',
   'thead{display:table-header-group}tr{break-inside:avoid}th{background:#e9e5db;color:#42453c;font-weight:700;text-align:left}',
-  'th,td{border:.55pt solid #d8d3c8;padding:6pt 7pt;vertical-align:top}tbody tr:nth-child(even){background:#faf8f3}',
+  'th,td{border:.55pt solid #d8d3c8;padding:6pt 7pt;vertical-align:top}td:first-child{min-width:43px}tbody tr:nth-child(even){background:#faf8f3}',
   'ul,ol{padding-left:18pt;margin:4pt 0 10pt}li{margin:0 0 3pt}a{color:#87533f;text-decoration:none}',
   'strong{color:#393a33}code{font:9pt Consolas,monospace;color:#5c604f}hr{border:0;border-top:1px solid #ded9cd;margin:15pt 0}',
   '</style></head><body><article>',

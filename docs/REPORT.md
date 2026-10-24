@@ -15,7 +15,7 @@ Zaliczone pomaga studentowi uporządkować przedmioty, terminy zaliczeń i zadan
 
 ### Zakres
 
-MVP obejmuje CRUD przedmiotów, terminy egzaminów/kolokwiów/projektów, zadania, filtr przedmiotu, postęp, lokalny zapis i kopię JSON. Konta, synchronizacja, współpraca i przypomnienia pozostają poza pierwszym wydaniem.
+MVP obejmuje dodawanie i usuwanie przedmiotów, terminy egzaminów/kolokwiów/projektów, zadania, filtr przedmiotu, postęp, lokalny zapis i kopię JSON. Konta, synchronizacja, współpraca i przypomnienia pozostają poza pierwszym wydaniem.
 
 ### Metodyka
 
@@ -48,7 +48,7 @@ Sprint 2 (02.11–08.11.2026): kopia danych, demonstracja, responsywność, test
 
 ### Backlog produktu i estymacja
 
-Wartości SP to propozycja Planning Poker przygotowana do wspólnego potwierdzenia przez zespół; nie są protokołem przeprowadzonego głosowania. Szczegółowe kryteria akceptacji są w 16 otwartych zadaniach GitHub.
+Wartości SP to propozycja Planning Poker przygotowana do wspólnego potwierdzenia przez zespół; nie są protokołem przeprowadzonego głosowania. Szczegółowe kryteria akceptacji są w zadaniach GitHub #1–16.
 
 | ID | User Story | Priorytet | SP | Sprint |
 |---|---|---:|---:|---:|
@@ -98,19 +98,19 @@ Funkcje MVP odpowiadają User Stories w backlogu i zgłoszeniom w repozytorium. 
 
 ### Stan przyrostu
 
-Poniższy stan opisuje pliki w opublikowanym commitcie; nie jest przypisaniem historycznego wkładu do osoby. Issues są otwarte po to, by zespół mógł wykonać własny przegląd, potwierdzić kryteria i zarejestrować swój udział.
+Poniższy stan opisuje rzeczywisty przyrost; nie jest przypisaniem historycznego wkładu do osoby. Technicznie zweryfikowane zadania mają dowody w Issues i PR. Odbiór zespołu oraz rzeczywisty feedback pozostają odrębnym zadaniem. Szczegółowe wyniki znajdują się w ACCEPTANCE.md.
 
 | Przyrost | Stan implementacji | Właściciel do odbioru |
 |---|---|---|
 | Przedmioty, formularze i filtr | W kodzie; przegląd zespołu do wykonania | Iwona Figas |
 | Terminy, zadania i postęp | W kodzie; przegląd zespołu do wykonania | Jarek Antczak |
-| Zapis i kopia JSON | W kodzie; odbiór importu do wykonania | Szymon Przybysz |
-| Scenariusze jakości i checklisty | Automatyka uruchomiona lokalnie; odbiór ręczny otwarty | Emil Kosicki |
-| CI, Pages i dokumentacja | CI i pierwsze wdrożenie przeszły; redesign czeka na ponowne wdrożenie | Szymon Przybysz |
+| Zapis i kopia JSON | Odtwarzanie i ochrona istniejącego planu sprawdzone automatycznie | Szymon Przybysz |
+| Scenariusze jakości i checklisty | Testy i przegląd 360 px wykonane; opinie zespołu otwarte | Emil Kosicki |
+| CI, Pages i dokumentacja | Redesign wdrożony przez PR #17; wyniki w Actions | Szymon Przybysz |
 
 ## 6. Testowanie i jakość
 
-Testy jednostkowe i interfejsu opisano w TEST_PLAN.md. W lokalnym uruchomieniu zestaw zakończył się wynikiem **5/5 testów**; kompilacja produkcyjna oraz audyt npm również przeszły.
+Testy jednostkowe i interfejsu opisano w TEST_PLAN.md. W lokalnym uruchomieniu po poprawkach #18 zestaw zakończył się wynikiem **11/11 testów w czterech plikach**; kompilacja produkcyjna przeszła. Poprzedni audyt npm nie wykazał podatności. Nie dodano nowych zależności.
 
 | ID | Scenariusz | Oczekiwany rezultat | Wynik |
 |---|---|---|---|
@@ -119,11 +119,13 @@ Testy jednostkowe i interfejsu opisano w TEST_PLAN.md. W lokalnym uruchomieniu z
 | T-03 | Dodać termin zaliczenia | Wpis jest widoczny i ma datę | Automatyczny test przechodzi |
 | T-04 | Oznaczyć zadanie jako wykonane | Status i postęp zmieniają się | Automatyczny test przechodzi |
 | T-05 | Filtrować plan po przedmiocie | Widać wpisy wybranego przedmiotu | Automatyczny test przechodzi |
-| T-06 | Zaimportować uszkodzoną kopię | Dotychczasowy plan pozostaje | Walidator jednostkowy przechodzi |
-| T-07 | Odtworzyć poprawną kopię na drugim urządzeniu | Pełny plan zostaje odtworzony | Odbiór ręczny do wykonania |
-| T-08 | Użyć interfejsu klawiaturą i na telefonie | Akcje dostępne, treść bez ucięcia | Odbiór ręczny do wykonania |
+| T-06 | Odtworzyć poprawną kopię | Plan zmienia się po potwierdzeniu | Test interfejsu przechodzi; drugi fizyczny sprzęt do odbioru zespołu |
+| T-07 | Zaimportować uszkodzoną kopię | Dotychczasowy plan pozostaje | Test walidatora i interfejsu przechodzi |
+| T-08 | Użyć klawiatury i widoku 360 px | Akcje dostępne, treść bez ucięcia | Tab/Escape/fokus sprawdzone; widok obejrzany w Chrome |
+| T-09 | Anulować usunięcie, następnie potwierdzić | Dane zmieniają się tylko po potwierdzeniu | Test interfejsu przechodzi |
+| T-10 | Liczyć dni przez zmianę czasu | 24–26 X to 2 dni | Test regresji przechodzi; Chrome pokazuje 2 dni |
 
-Pierwsze workflowy CI i Pages zakończyły się sukcesem przed redesignem; po publikacji nowej wersji trzeba potwierdzić aktualny run. Repo zawiera formularz Issue dla zgłoszeń błędów i checklistę jakości.
+Workflowy redesignu po PR #17 zakończyły się sukcesem: CI 40088853147 i Pages 40088853150. Kolejne poprawki są weryfikowane w osobnym PR; aktualny stan publikacji jest widoczny w historii Actions. Rzeczywiste błędy odbioru i regresje opisuje Issue #18.
 
 ## 7. Zarządzanie ryzykiem
 
@@ -167,4 +169,4 @@ Feedback 360° zawiera pola do wypełnienia przez członków i interesariuszy. N
 
 ## 10. Wnioski i rekomendacje
 
-MVP spełnia cel użytkowy: ma przedmioty, terminy, zadania, wskaźnik postępu i lokalny zapis. Do końca zaliczenia zespół powinien potwierdzić ręczne odtworzenie JSON i obsługę klawiaturą, a następnie wpisać aktualny link do Pages i status workflow. Dalszy rozwój może objąć tygodniowy plan, przypomnienia i synchronizację dopiero po decyzji o logowaniu i ochronie danych. Zalecenia: prowadzić każde zadanie przez Issue i PR, ograniczać WIP, dokumentować blokady, a retrospektywę kończyć konkretną zmianą procesu.
+MVP spełnia cel użytkowy: ma przedmioty, terminy, zadania, wskaźnik postępu i lokalny zapis. Odbiór techniczny objął kopię JSON, klawiaturę i mobilny widok 360 px. Do końca zaliczenia zespół powinien przyjąć zaproszenia, wykonać własny przegląd na swoich urządzeniach i uzupełnić rzeczywisty feedback 360°. Dalszy rozwój może objąć tygodniowy plan, przypomnienia i synchronizację po decyzji o logowaniu i ochronie danych. Zalecenia: prowadzić każde zadanie przez Issue i PR, ograniczać WIP, dokumentować blokady, a retrospektywę kończyć konkretną zmianą procesu.
